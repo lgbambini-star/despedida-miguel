@@ -1,19 +1,15 @@
 import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
+import { ThemeCarousel } from "@/components/ThemeCarousel";
 import { RegistrationsList } from "@/components/sections/RegistrationsList";
 import { CarpoolSuggestions } from "@/components/sections/CarpoolSuggestions";
-import { SoccerField } from "@/components/sections/SoccerField";
-import { BandStage } from "@/components/sections/BandStage";
-import { Zoo } from "@/components/sections/Zoo";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Registration } from "@/lib/types";
 
 const EXPLORE_LINKS = [
   { href: "#confirmados", label: "Quem já confirmou" },
   { href: "#caronas", label: "Sugestões de carona 🚐" },
-  { href: "#campo", label: "Escalação ⚽" },
-  { href: "#palco", label: "A banda 🎸" },
-  { href: "#zoologico", label: "O zoológico 🦁" },
+  { href: "#temas", label: "Escalação, banda e zoológico 🎉" },
 ];
 
 export default async function Home() {
@@ -99,24 +95,10 @@ export default async function Home() {
           </section>
 
           <section
-            id="campo"
+            id="temas"
             className="mx-auto w-full max-w-2xl scroll-mt-6 border-t border-zinc-100 px-6 py-14"
           >
-            <SoccerField registrations={registrations} />
-          </section>
-
-          <section
-            id="palco"
-            className="mx-auto w-full max-w-2xl scroll-mt-6 border-t border-zinc-100 px-6 py-14"
-          >
-            <BandStage registrations={registrations} />
-          </section>
-
-          <section
-            id="zoologico"
-            className="mx-auto w-full max-w-2xl scroll-mt-6 border-t border-zinc-100 px-6 py-14"
-          >
-            <Zoo registrations={registrations} />
+            <ThemeCarousel registrations={registrations} />
           </section>
         </>
       )}
