@@ -1,60 +1,10 @@
 import type { Registration } from "@/lib/types";
 
-const TIMEZONE = "America/Sao_Paulo";
-
-const dateKeyFormatter = new Intl.DateTimeFormat("en-CA", {
-  timeZone: TIMEZONE,
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-
 const timeFormatter = new Intl.DateTimeFormat("pt-BR", {
-  timeZone: TIMEZONE,
+  timeZone: "America/Sao_Paulo",
   hour: "2-digit",
   minute: "2-digit",
 });
-
-const weekdayFormatter = new Intl.DateTimeFormat("pt-BR", {
-  timeZone: TIMEZONE,
-  weekday: "short",
-});
-
-export const TRIP_DAYS = [
-  "2026-09-04",
-  "2026-09-05",
-  "2026-09-06",
-  "2026-09-07",
-  "2026-09-08",
-];
-
-export function dateKey(isoString: string): string {
-  return dateKeyFormatter.format(new Date(isoString));
-}
-
-export function formatDayLabel(day: string): string {
-  const [year, month, dayOfMonth] = day.split("-").map(Number);
-  // meio-dia UTC evita virada de dia por causa do fuso ao formatar o weekday
-  const date = new Date(Date.UTC(year, month - 1, dayOfMonth, 12));
-  const weekday = weekdayFormatter.format(date).replace(".", "");
-  return `${String(dayOfMonth).padStart(2, "0")}/${String(month).padStart(2, "0")} (${weekday})`;
-}
-
-export type DayPresence = {
-  day: string;
-  people: Registration[];
-};
-
-export function computePresenceByDay(registrations: Registration[]): DayPresence[] {
-  return TRIP_DAYS.map((day) => ({
-    day,
-    people: registrations.filter((r) => {
-      const arrivalDay = dateKey(r.arrival_at);
-      const departureDay = dateKey(r.departure_at);
-      return arrivalDay <= day && departureDay >= day;
-    }),
-  }));
-}
 
 export type CarpoolGroup = {
   time: string;
