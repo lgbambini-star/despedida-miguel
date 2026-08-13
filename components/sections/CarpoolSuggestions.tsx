@@ -81,6 +81,32 @@ export function CarpoolSuggestions({ registrations }: { registrations: Registrat
         </div>
       )}
 
+      {sortedByArrival.length > 0 && (
+        <section>
+          <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
+            Calendário de chegadas
+          </h3>
+          <div className="mt-2 flex flex-wrap gap-3">
+            {arrivalDays.map((group) => (
+              <CalendarDay key={group.key} group={group} field="arrival_at" />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {sortedByArrival.length > 0 && (
+        <section>
+          <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
+            Calendário de voltas
+          </h3>
+          <div className="mt-2 flex flex-wrap gap-3">
+            {departureDays.map((group) => (
+              <CalendarDay key={group.key} group={group} field="departure_at" />
+            ))}
+          </div>
+        </section>
+      )}
+
       {sortedByArrival.length > 0 && renters.length === 0 && (
         <p className="text-sm text-zinc-500">
           Ninguém marcou ainda que pode alugar carro. Assim que alguém marcar &quot;Sim&quot; no
@@ -127,32 +153,6 @@ export function CarpoolSuggestions({ registrations }: { registrations: Registrat
               </li>
             ))}
           </ul>
-        </div>
-      )}
-
-      {sortedByArrival.length > 0 && (
-        <div className="flex flex-col gap-6">
-          <section>
-            <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
-              Calendário de chegadas
-            </h3>
-            <div className="mt-2 flex flex-wrap gap-3">
-              {arrivalDays.map((group) => (
-                <CalendarDay key={group.key} group={group} field="arrival_at" />
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
-              Calendário de voltas
-            </h3>
-            <div className="mt-2 flex flex-wrap gap-3">
-              {departureDays.map((group) => (
-                <CalendarDay key={group.key} group={group} field="departure_at" />
-              ))}
-            </div>
-          </section>
         </div>
       )}
     </div>

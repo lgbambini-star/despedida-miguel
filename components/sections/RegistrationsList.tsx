@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { formatDateTime } from "@/lib/format";
 import type { Registration } from "@/lib/types";
 
 export function RegistrationsList({ registrations }: { registrations: Registration[] }) {
@@ -22,20 +21,13 @@ export function RegistrationsList({ registrations }: { registrations: Registrati
           </Link>
         </div>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-wrap gap-2">
           {sorted.map((r) => (
-            <li key={r.id} className="rounded-lg border border-zinc-200 p-4">
-              <p className="font-semibold">{r.name}</p>
-              <p className="mt-1 text-sm text-zinc-600">
-                Chegada: {formatDateTime(r.arrival_at)} · Volta: {formatDateTime(r.departure_at)}
-              </p>
-              <p className="mt-1 text-sm text-zinc-600">
-                ⚽ {r.player} · 🎸 {r.instrument} · 🐾 {r.animal}
-              </p>
-              <p className="mt-1 text-sm text-zinc-600">
-                🥃 {r.destilado_combo ?? "—"} · 🚗 Aluga carro:{" "}
-                {r.pode_alugar_carro === null ? "—" : r.pode_alugar_carro ? "Sim" : "Não"}
-              </p>
+            <li
+              key={r.id}
+              className="rounded-full border border-zinc-200 bg-zinc-50 px-4 py-2 text-sm font-medium text-zinc-700"
+            >
+              {r.name}
             </li>
           ))}
         </ul>
