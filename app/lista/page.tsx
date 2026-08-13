@@ -44,6 +44,10 @@ export default async function ListaPage() {
             <p className="mt-1 text-sm text-zinc-600">
               ⚽ {r.player} · 🎸 {r.instrument} · 🐾 {r.animal}
             </p>
+            <p className="mt-1 text-sm text-zinc-600">
+              🥃 {r.destilado_combo ?? "—"} · 🚗 Aluga carro:{" "}
+              {r.pode_alugar_carro === null ? "—" : r.pode_alugar_carro ? "Sim" : "Não"}
+            </p>
           </li>
         ))}
       </ul>

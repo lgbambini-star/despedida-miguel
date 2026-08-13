@@ -25,10 +25,23 @@ export async function createRegistration(
   const player = String(formData.get("player") || "");
   const instrument = String(formData.get("instrument") || "").trim();
   const animal = String(formData.get("animal") || "").trim();
+  const destiladoCombo = String(formData.get("destiladoCombo") || "").trim();
+  const podeAlugarCarroRaw = String(formData.get("podeAlugarCarro") || "");
 
-  if (!name || !arrivalAt || !departureAt || !player || !instrument || !animal) {
+  if (
+    !name ||
+    !arrivalAt ||
+    !departureAt ||
+    !player ||
+    !instrument ||
+    !animal ||
+    !destiladoCombo ||
+    (podeAlugarCarroRaw !== "sim" && podeAlugarCarroRaw !== "nao")
+  ) {
     return { error: "Preenche todos os campos antes de enviar." };
   }
+
+  const podeAlugarCarro = podeAlugarCarroRaw === "sim";
 
   const arrival = new Date(arrivalAt);
   const departure = new Date(departureAt);
@@ -49,6 +62,8 @@ export async function createRegistration(
     player,
     instrument,
     animal,
+    destilado_combo: destiladoCombo,
+    pode_alugar_carro: podeAlugarCarro,
   });
 
   if (error) {

@@ -14,4 +14,6 @@ export interface Registration {
   player: string;
   instrument: string;
   animal: string;
+  destilado_combo: string | null;
+  pode_alugar_carro: boolean | null;
 }

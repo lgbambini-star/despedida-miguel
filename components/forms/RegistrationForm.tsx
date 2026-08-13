@@ -3,6 +3,7 @@
 import { useActionState, useMemo } from "react";
 import { createRegistration, type RegistrationFormState } from "@/app/cadastro/actions";
 import { PLAYERS_2002 } from "@/lib/data/players-2002";
+import { DESTILADOS } from "@/lib/data/destilados";
 
 const initialState: RegistrationFormState = {};
 
@@ -124,6 +125,47 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           required
           className="rounded-md border border-zinc-300 px-3 py-2"
         />
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="destiladoCombo" className="text-sm font-medium">
+          Qual o destilado para o combo?
+        </label>
+        <select
+          id="destiladoCombo"
+          name="destiladoCombo"
+          required
+          defaultValue=""
+          className="rounded-md border border-zinc-300 px-3 py-2"
+        >
+          <option value="" disabled>
+            Escolha um destilado
+          </option>
+          {DESTILADOS.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-1">
+        <label htmlFor="podeAlugarCarro" className="text-sm font-medium">
+          Tem possibilidade de alugar carro?
+        </label>
+        <select
+          id="podeAlugarCarro"
+          name="podeAlugarCarro"
+          required
+          defaultValue=""
+          className="rounded-md border border-zinc-300 px-3 py-2"
+        >
+          <option value="" disabled>
+            Escolha uma opção
+          </option>
+          <option value="sim">Sim</option>
+          <option value="nao">Não</option>
+        </select>
       </div>
 
       {state.error && <p className="text-sm text-red-600">{state.error}</p>}
