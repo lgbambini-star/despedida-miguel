@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BackHomeLink } from "@/components/BackHomeLink";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Registration } from "@/lib/types";
 import { groupByAnimal } from "@/lib/zoo";
@@ -15,6 +16,7 @@ export default async function ZoologicoPage() {
 
   return (
     <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-8 px-6 py-12">
+      <BackHomeLink />
       <div>
         <h1 className="text-2xl font-semibold">O zoológico 🦁</h1>
         <p className="mt-1 text-sm text-zinc-600">
