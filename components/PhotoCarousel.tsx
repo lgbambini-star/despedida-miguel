@@ -20,13 +20,13 @@ export function PhotoCarousel() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-2xl bg-zinc-100 shadow-md sm:aspect-video sm:max-w-2xl">
+      <div className="relative mx-auto h-[65vh] max-h-[560px] w-full max-w-md overflow-hidden rounded-2xl bg-zinc-900 shadow-md">
         <Image
           src={PHOTOS[index]}
           alt={`Foto do Miguel ${index + 1}`}
           fill
-          sizes="(min-width: 640px) 672px, 384px"
-          className="object-cover"
+          sizes="(min-width: 640px) 448px, 100vw"
+          className="object-contain"
           priority={index === 0}
         />
 
