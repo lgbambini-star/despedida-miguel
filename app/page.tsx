@@ -3,7 +3,7 @@ import { Countdown } from "@/components/Countdown";
 
 const EXPLORE_LINKS = [
   { href: "/lista", label: "Quem já confirmou" },
-  { href: "/logistica", label: "Linha do tempo / logística" },
+  { href: "/logistica", label: "Sugestões de carona 🚐" },
   { href: "/campo", label: "Escalação ⚽" },
   { href: "/palco", label: "A banda 🎸" },
   { href: "/zoologico", label: "O zoológico 🦁" },
