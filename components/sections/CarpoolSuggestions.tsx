@@ -1,7 +1,57 @@
 import Link from "next/link";
-import { formatDateTime } from "@/lib/format";
+import { dayKey, formatDateTime, formatDayNumber, formatTime, formatWeekday } from "@/lib/format";
 import type { Registration } from "@/lib/types";
 import { planCarpools } from "@/lib/carpool";
+
+type DayGroup = {
+  key: string;
+  people: Registration[];
+};
+
+function groupByDay(list: Registration[], field: "arrival_at" | "departure_at"): DayGroup[] {
+  const groups = new Map<string, Registration[]>();
+
+  for (const person of list) {
+    const key = dayKey(person[field]);
+    const group = groups.get(key);
+    if (group) {
+      group.push(person);
+    } else {
+      groups.set(key, [person]);
+    }
+  }
+
+  return [...groups.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([key, people]) => ({
+      key,
+      people: [...people].sort(
+        (a, b) => new Date(a[field]).getTime() - new Date(b[field]).getTime(),
+      ),
+    }));
+}
+
+function CalendarDay({ group, field }: { group: DayGroup; field: "arrival_at" | "departure_at" }) {
+  const sample = group.people[0][field];
+
+  return (
+    <div className="min-w-[130px] flex-1 overflow-hidden rounded-xl border border-zinc-200">
+      <div className="bg-zinc-800 py-2 text-center text-white">
+        <p className="text-lg leading-none font-bold">{formatDayNumber(sample)}</p>
+        <p className="text-[10px] tracking-wide text-zinc-300 uppercase">
+          set · {formatWeekday(sample)}
+        </p>
+      </div>
+      <ul className="flex flex-col gap-1 p-2">
+        {group.people.map((p) => (
+          <li key={p.id} className="text-xs">
+            {p.name} <span className="text-zinc-400">{formatTime(p[field])}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export function CarpoolSuggestions({ registrations }: { registrations: Registration[] }) {
   const sortedByArrival = [...registrations].sort(
@@ -9,6 +59,8 @@ export function CarpoolSuggestions({ registrations }: { registrations: Registrat
   );
   const renters = registrations.filter((r) => r.pode_alugar_carro === true);
   const { cars, unassigned } = planCarpools(registrations);
+  const arrivalDays = groupByDay(registrations, "arrival_at");
+  const departureDays = groupByDay(registrations, "departure_at");
 
   return (
     <div className="flex flex-col gap-10">
@@ -79,19 +131,29 @@ export function CarpoolSuggestions({ registrations }: { registrations: Registrat
       )}
 
       {sortedByArrival.length > 0 && (
-        <section>
-          <h3 className="text-xl font-semibold">Todos os voos</h3>
-          <ul className="mt-3 flex flex-col gap-3">
-            {sortedByArrival.map((r) => (
-              <li key={r.id} className="rounded-lg border border-zinc-200 p-4 text-sm">
-                <p className="font-semibold">{r.name}</p>
-                <p className="mt-1 text-zinc-600">
-                  Chegada: {formatDateTime(r.arrival_at)} · Volta: {formatDateTime(r.departure_at)}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </section>
+        <div className="flex flex-col gap-6">
+          <section>
+            <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
+              Calendário de chegadas
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-3">
+              {arrivalDays.map((group) => (
+                <CalendarDay key={group.key} group={group} field="arrival_at" />
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
+              Calendário de voltas
+            </h3>
+            <div className="mt-2 flex flex-wrap gap-3">
+              {departureDays.map((group) => (
+                <CalendarDay key={group.key} group={group} field="departure_at" />
+              ))}
+            </div>
+          </section>
+        </div>
       )}
     </div>
   );
