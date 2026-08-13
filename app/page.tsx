@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
+import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { ThemeCarousel } from "@/components/ThemeCarousel";
 import { RegistrationsList } from "@/components/sections/RegistrationsList";
 import { CarpoolSuggestions } from "@/components/sections/CarpoolSuggestions";
@@ -83,7 +84,15 @@ export default async function Home() {
 
       {!error && (
         <>
-          <section id="confirmados" className="mx-auto w-full max-w-2xl scroll-mt-6 px-6 py-14">
+          <section className="mx-auto w-full max-w-2xl px-6 py-14">
+            <h2 className="mb-4 text-2xl font-semibold">O aniversariante 📸</h2>
+            <PhotoCarousel />
+          </section>
+
+          <section
+            id="confirmados"
+            className="mx-auto w-full max-w-2xl scroll-mt-6 border-t border-zinc-100 px-6 py-14"
+          >
             <RegistrationsList registrations={registrations} />
           </section>
 
