@@ -64,5 +64,8 @@ export async function createRegistration(
   revalidatePath("/cadastro");
   revalidatePath("/lista");
   revalidatePath("/logistica");
+  revalidatePath("/campo");
+  revalidatePath("/palco");
+  revalidatePath("/zoologico");
   return { success: true };
 }
