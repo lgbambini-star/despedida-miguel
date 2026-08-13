@@ -8,7 +8,7 @@ export default function Home() {
         Página inicial provisória — a capa de verdade (contagem regressiva, identidade visual)
         vem na última fase. Por enquanto, dá pra testar o cadastro:
       </p>
-      <div className="flex gap-3">
+      <div className="flex flex-wrap justify-center gap-3">
         <Link
           href="/cadastro"
           className="rounded-full bg-black px-6 py-3 font-medium text-white"
@@ -20,6 +20,12 @@ export default function Home() {
           className="rounded-full border border-zinc-300 px-6 py-3 font-medium"
         >
           Ver quem já confirmou
+        </Link>
+        <Link
+          href="/logistica"
+          className="rounded-full border border-zinc-300 px-6 py-3 font-medium"
+        >
+          Linha do tempo / logística
         </Link>
       </div>
     </div>

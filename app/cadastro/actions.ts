@@ -63,5 +63,6 @@ export async function createRegistration(
 
   revalidatePath("/cadastro");
   revalidatePath("/lista");
+  revalidatePath("/logistica");
   return { success: true };
 }
