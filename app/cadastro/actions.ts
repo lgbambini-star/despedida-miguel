@@ -76,6 +76,7 @@ export async function createRegistration(
     return { error: "Não deu pra salvar, tenta de novo em instantes." };
   }
 
+  revalidatePath("/");
   revalidatePath("/cadastro");
   revalidatePath("/lista");
   revalidatePath("/logistica");

@@ -7,6 +7,8 @@ import { CarpoolSuggestions } from "@/components/sections/CarpoolSuggestions";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Registration } from "@/lib/types";
 
+export const revalidate = 0;
+
 const EXPLORE_LINKS = [
   { href: "#confirmados", label: "Quem já confirmou" },
   { href: "#caronas", label: "Sugestões de carona 🚐" },
@@ -85,7 +87,7 @@ export default async function Home() {
       {!error && (
         <>
           <section className="mx-auto w-full max-w-2xl px-6 py-14">
-            <h2 className="mb-4 text-2xl font-semibold">O aniversariante 📸</h2>
+            <h2 className="mb-4 text-2xl font-semibold">O noivo 📸</h2>
             <PhotoCarousel />
           </section>
 
