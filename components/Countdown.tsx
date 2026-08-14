@@ -48,15 +48,17 @@ export function Countdown() {
 
   return (
     <div className="flex gap-2 sm:gap-3">
-      {units.map((u) => (
+      {units.map((u, i) => (
         <div
           key={u.label}
-          className="flex min-w-[60px] flex-col items-center rounded-xl bg-white/20 px-3 py-2 backdrop-blur-sm"
+          className="flex min-w-[64px] flex-col items-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 backdrop-blur-sm"
         >
-          <span className="text-2xl font-bold tabular-nums text-white">
+          <span
+            className={`font-display text-2xl tabular-nums ${i === units.length - 1 ? "text-orange" : "text-white"}`}
+          >
             {String(u.value).padStart(2, "0")}
           </span>
-          <span className="text-[10px] tracking-wide text-white/80 uppercase">{u.label}</span>
+          <span className="text-[10px] tracking-wide text-white/50 uppercase">{u.label}</span>
         </div>
       ))}
     </div>

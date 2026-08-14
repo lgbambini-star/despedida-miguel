@@ -13,7 +13,7 @@ export default async function CampoPage() {
     <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-8 px-6 py-12">
       <BackHomeLink />
       {error ? (
-        <p className="text-sm text-red-600">Não consegui carregar a escalação agora. Tenta recarregar.</p>
+        <p className="text-sm text-pink-300">Não consegui carregar a escalação agora. Tenta recarregar.</p>
       ) : (
         <SoccerField registrations={registrations} />
       )}

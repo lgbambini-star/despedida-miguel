@@ -1,20 +1,8 @@
+import Link from "next/link";
 import type { Registration } from "@/lib/types";
-import { DESTILADOS } from "@/lib/data/destilados";
+import { countDestiladoVotes } from "@/lib/destiladoStats";
 
-// Cores na mesma ordem categórica fixa usada no resto do app (cada destilado
-// sempre com a mesma cor, independente de quantas pessoas escolheram).
-const COLORS: Record<string, string> = {
-  Vodka: "#2a78d6",
-  Whisky: "#eb6834",
-  Gin: "#1baf7a",
-  Rum: "#eda100",
-  Tequila: "#e87ba4",
-  Cachaça: "#008300",
-  "Não vou beber": "#4a3aa7",
-};
-const UNANSWERED_LABEL = "Ainda não respondeu";
-const UNANSWERED_COLOR = "#c3c2b7";
-const TRACK_COLOR = "#ffffff";
+const TRACK_COLOR = "rgba(255,255,255,0.08)";
 
 const SIZE = 176;
 const STROKE = 26;
@@ -24,21 +12,22 @@ const GAP = 3;
 
 export function DestiladoChart({ registrations }: { registrations: Registration[] }) {
   const total = registrations.length;
-  if (total === 0) return null;
 
-  const counts = new Map<string, number>();
-  for (const r of registrations) {
-    const key = r.destilado_combo ?? UNANSWERED_LABEL;
-    counts.set(key, (counts.get(key) ?? 0) + 1);
+  if (total === 0) {
+    return (
+      <div className="flex flex-col gap-4">
+        <h2 className="text-center font-display text-2xl">Preferência de destilado 🍹</h2>
+        <div className="rounded-xl border border-dashed border-white/15 p-8 text-center text-white/50">
+          <p>Ninguém respondeu ainda.</p>
+          <Link href="/cadastro" className="mt-2 inline-block text-mint underline">
+            Seja o primeiro
+          </Link>
+        </div>
+      </div>
+    );
   }
 
-  const categories = [...DESTILADOS, UNANSWERED_LABEL]
-    .map((label) => ({
-      label,
-      count: counts.get(label) ?? 0,
-      color: COLORS[label] ?? UNANSWERED_COLOR,
-    }))
-    .filter((c) => c.count > 0);
+  const categories = countDestiladoVotes(registrations);
 
   let cursor = 0;
   const segments = categories.map((c) => {
@@ -50,9 +39,7 @@ export function DestiladoChart({ registrations }: { registrations: Registration[
 
   return (
     <div className="flex flex-col gap-4">
-      <h3 className="text-sm font-semibold text-zinc-500 uppercase tracking-wide">
-        Preferência de destilado
-      </h3>
+      <h2 className="text-center font-display text-2xl">Preferência de destilado 🍹</h2>
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-center">
         <div className="relative shrink-0" style={{ width: SIZE, height: SIZE }}>
           <svg
@@ -88,8 +75,8 @@ export function DestiladoChart({ registrations }: { registrations: Registration[
             ))}
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-2xl font-bold text-zinc-900">{total}</span>
-            <span className="text-[10px] tracking-wide text-zinc-500 uppercase">confirmados</span>
+            <span className="font-display text-2xl text-white">{total}</span>
+            <span className="text-[10px] tracking-wide text-white/50 uppercase">confirmados</span>
           </div>
         </div>
 
@@ -101,8 +88,8 @@ export function DestiladoChart({ registrations }: { registrations: Registration[
                 className="h-2.5 w-2.5 shrink-0 rounded-full"
                 style={{ backgroundColor: s.color }}
               />
-              <span className="text-zinc-700">{s.label}</span>
-              <span className="text-zinc-400">
+              <span className="text-white/80">{s.label}</span>
+              <span className="text-white/40">
                 {Math.round((s.count / total) * 100)}% ({s.count})
               </span>
             </li>

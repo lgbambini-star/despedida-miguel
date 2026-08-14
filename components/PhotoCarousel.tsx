@@ -9,6 +9,11 @@ const PHOTOS = [
   "/fotos-miguel/foto-3.jpg",
   "/fotos-miguel/foto-4.jpg",
   "/fotos-miguel/foto-5.jpg",
+  "/fotos-miguel/foto-6.jpg",
+  "/fotos-miguel/foto-7.jpg",
+  "/fotos-miguel/foto-8.jpg",
+  "/fotos-miguel/foto-9.jpg",
+  "/fotos-miguel/foto-10.jpg",
 ];
 
 export function PhotoCarousel() {
@@ -20,7 +25,7 @@ export function PhotoCarousel() {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="relative mx-auto h-[65vh] max-h-[560px] w-full max-w-md overflow-hidden rounded-2xl bg-zinc-900 shadow-md">
+      <div className="relative mx-auto h-[65vh] max-h-[560px] w-full max-w-md overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
         <Image
           src={PHOTOS[index]}
           alt={`Foto do Miguel ${index + 1}`}
@@ -57,8 +62,8 @@ export function PhotoCarousel() {
             aria-label={`Ir para a foto ${i + 1}`}
             className={
               i === index
-                ? "h-2 w-6 rounded-full bg-zinc-800 transition"
-                : "h-2 w-2 rounded-full bg-zinc-300 transition hover:bg-zinc-400"
+                ? "h-2 w-6 rounded-full bg-mint transition"
+                : "h-2 w-2 rounded-full bg-white/25 transition hover:bg-white/40"
             }
           />
         ))}

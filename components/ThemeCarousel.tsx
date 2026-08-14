@@ -26,7 +26,7 @@ export function ThemeCarousel({ registrations }: { registrations: Registration[]
           type="button"
           onClick={() => goTo(index - 1)}
           aria-label="Tema anterior"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-lg text-zinc-600 transition hover:bg-zinc-100"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-lg text-white/70 transition hover:border-mint/40 hover:text-mint"
         >
           ‹
         </button>
@@ -39,8 +39,8 @@ export function ThemeCarousel({ registrations }: { registrations: Registration[]
               onClick={() => goTo(i)}
               className={
                 i === index
-                  ? "rounded-full bg-zinc-900 px-4 py-2 text-sm font-medium whitespace-nowrap text-white"
-                  : "rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium whitespace-nowrap text-zinc-600 transition hover:bg-zinc-100"
+                  ? "rounded-full bg-gradient-to-r from-orange to-pink px-4 py-2 text-sm font-medium whitespace-nowrap text-white"
+                  : "rounded-full border border-white/15 px-4 py-2 text-sm font-medium whitespace-nowrap text-white/70 transition hover:border-mint/40 hover:text-mint"
               }
             >
               {slide.label}
@@ -52,7 +52,7 @@ export function ThemeCarousel({ registrations }: { registrations: Registration[]
           type="button"
           onClick={() => goTo(index + 1)}
           aria-label="Próximo tema"
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-zinc-300 text-lg text-zinc-600 transition hover:bg-zinc-100"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/15 text-lg text-white/70 transition hover:border-mint/40 hover:text-mint"
         >
           ›
         </button>

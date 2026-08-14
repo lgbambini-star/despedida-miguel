@@ -24,11 +24,11 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
 
   if (state.success) {
     return (
-      <div className="rounded-lg border border-green-300 bg-green-50 p-6 text-green-900">
-        <p className="font-semibold">Cadastro feito! 🎉</p>
-        <p className="mt-1 text-sm">
+      <div className="rounded-xl border border-mint/30 bg-mint/10 p-6">
+        <p className="font-semibold text-mint">Cadastro feito! 🎉</p>
+        <p className="mt-1 text-sm text-white/80">
           Já dá pra ver seu nome na{" "}
-          <a href="/lista" className="underline">
+          <a href="/lista" className="text-mint underline">
             lista de quem confirmou
           </a>
           .
@@ -40,7 +40,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
   return (
     <form action={formAction} className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-sm font-medium">
+        <label htmlFor="name" className="text-sm font-medium text-white/80">
           Nome
         </label>
         <input
@@ -48,12 +48,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="name"
           type="text"
           required
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="arrivalAt" className="text-sm font-medium">
+        <label htmlFor="arrivalAt" className="text-sm font-medium text-white/80">
           Voo de chegada (data e horário)
         </label>
         <input
@@ -61,12 +61,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="arrivalAt"
           type="datetime-local"
           required
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="departureAt" className="text-sm font-medium">
+        <label htmlFor="departureAt" className="text-sm font-medium text-white/80">
           Voo de volta (data e horário)
         </label>
         <input
@@ -74,12 +74,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="departureAt"
           type="datetime-local"
           required
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="player" className="text-sm font-medium">
+        <label htmlFor="player" className="text-sm font-medium text-white/80">
           Jogador da Seleção Brasileira na Copa de 2002 que você seria
         </label>
         <select
@@ -87,7 +87,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="player"
           required
           defaultValue=""
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         >
           <option value="" disabled>
             Escolha um jogador
@@ -102,7 +102,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="instrument" className="text-sm font-medium">
+        <label htmlFor="instrument" className="text-sm font-medium text-white/80">
           Instrumento que tocaria numa banda
         </label>
         <input
@@ -110,12 +110,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="instrument"
           type="text"
           required
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="animal" className="text-sm font-medium">
+        <label htmlFor="animal" className="text-sm font-medium text-white/80">
           Animal que você seria
         </label>
         <input
@@ -123,12 +123,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="animal"
           type="text"
           required
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         />
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="destiladoCombo" className="text-sm font-medium">
+        <label htmlFor="destiladoCombo" className="text-sm font-medium text-white/80">
           Qual o destilado para o combo?
         </label>
         <select
@@ -136,7 +136,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="destiladoCombo"
           required
           defaultValue=""
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         >
           <option value="" disabled>
             Escolha um destilado
@@ -150,7 +150,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label htmlFor="podeAlugarCarro" className="text-sm font-medium">
+        <label htmlFor="podeAlugarCarro" className="text-sm font-medium text-white/80">
           Tem possibilidade de alugar carro?
         </label>
         <select
@@ -158,7 +158,7 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
           name="podeAlugarCarro"
           required
           defaultValue=""
-          className="rounded-md border border-zinc-300 px-3 py-2"
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
         >
           <option value="" disabled>
             Escolha uma opção
@@ -168,12 +168,12 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
         </select>
       </div>
 
-      {state.error && <p className="text-sm text-red-600">{state.error}</p>}
+      {state.error && <p className="text-sm text-pink-300">{state.error}</p>}
 
       <button
         type="submit"
         disabled={isPending}
-        className="mt-2 rounded-full bg-black px-5 py-3 font-medium text-white disabled:opacity-50"
+        className="mt-2 rounded-full bg-gradient-to-r from-orange to-pink px-5 py-3 font-medium text-white shadow-[0_8px_32px_rgba(255,0,110,0.35)] transition hover:-translate-y-0.5 disabled:opacity-50 disabled:hover:translate-y-0"
       >
         {isPending ? "Enviando..." : "Enviar cadastro"}
       </button>
