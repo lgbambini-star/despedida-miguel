@@ -110,7 +110,7 @@ export default async function Home() {
       {!error && (
         <>
           <section className="mx-auto w-full max-w-2xl px-6 py-14">
-            <h2 className="mb-4 text-center font-display text-2xl">O falecido 📸</h2>
+            <h2 className="mb-4 text-center font-display text-2xl">O Advogado mais admirado do Brasil 📸</h2>
             <PhotoCarousel />
           </section>
 
