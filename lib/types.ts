@@ -16,4 +16,5 @@ export interface Registration {
   animal: string;
   destilado_combo: string | null;
   pode_alugar_carro: boolean | null;
+  message: string | null;
 }

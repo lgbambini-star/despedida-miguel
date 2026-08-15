@@ -27,6 +27,7 @@ export async function createRegistration(
   const animal = String(formData.get("animal") || "").trim();
   const destiladoCombo = String(formData.get("destiladoCombo") || "").trim();
   const podeAlugarCarroRaw = String(formData.get("podeAlugarCarro") || "");
+  const message = String(formData.get("message") || "").trim();
 
   if (
     !name ||
@@ -64,6 +65,7 @@ export async function createRegistration(
     animal,
     destilado_combo: destiladoCombo,
     pode_alugar_carro: podeAlugarCarro,
+    message: message || null,
   });
 
   if (error) {

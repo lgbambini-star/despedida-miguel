@@ -11,6 +11,7 @@ create table if not exists registrations (
   animal text not null,
   destilado_combo text,
   pode_alugar_carro boolean,
+  message text,
   constraint departure_after_arrival check (departure_at > arrival_at)
 );
 
@@ -33,4 +34,5 @@ alter publication supabase_realtime add table registrations;
 -- rode só o trecho abaixo no SQL Editor do Supabase pra adicionar os campos novos.
 alter table registrations
   add column if not exists destilado_combo text,
-  add column if not exists pode_alugar_carro boolean;
+  add column if not exists pode_alugar_carro boolean,
+  add column if not exists message text;

@@ -168,6 +168,18 @@ export function RegistrationForm({ takenPlayers }: { takenPlayers: string[] }) {
         </select>
       </div>
 
+      <div className="flex flex-col gap-1">
+        <label htmlFor="message" className="text-sm font-medium text-white/80">
+          Escreva uma mensagem para nosso advogado mais admirado
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          rows={4}
+          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
+        />
+      </div>
+
       {state.error && <p className="text-sm text-pink-300">{state.error}</p>}
 
       <button

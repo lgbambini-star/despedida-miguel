@@ -4,6 +4,7 @@ import { PhotoCarousel } from "@/components/PhotoCarousel";
 import { ThemeCarousel } from "@/components/ThemeCarousel";
 import { HeroSpotlight } from "@/components/HeroSpotlight";
 import { DestiladoChart } from "@/components/sections/DestiladoChart";
+import { MessagesBoard } from "@/components/sections/MessagesBoard";
 import { CarpoolSuggestions } from "@/components/sections/CarpoolSuggestions";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { Registration } from "@/lib/types";
@@ -112,6 +113,13 @@ export default async function Home() {
           <section className="mx-auto w-full max-w-2xl px-6 py-14">
             <h2 className="mb-4 text-center font-display text-2xl">O Advogado mais admirado do Brasil 📸</h2>
             <PhotoCarousel />
+          </section>
+
+          <section
+            id="mensagens"
+            className="mx-auto w-full max-w-2xl scroll-mt-6 border-t border-white/10 px-6 py-14"
+          >
+            <MessagesBoard registrations={registrations} />
           </section>
 
           <section
