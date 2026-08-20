@@ -1,5 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { PlayerPosition, Registration } from "@/lib/types";
+import { PLAYERS } from "@/lib/data/players";
 import {
   computeLineup,
   POSITION_LABEL,
@@ -7,19 +9,29 @@ import {
   type LineupSlot,
 } from "@/lib/lineup";
 
+const PLAYER_BY_NAME = new Map(PLAYERS.map((p) => [p.name, p]));
+
 function PositionSlot({ slot, position }: { slot: LineupSlot; position: PlayerPosition }) {
   if (slot) {
+    const card = PLAYER_BY_NAME.get(slot.player);
     return (
-      <div className="flex min-w-[84px] flex-col items-center gap-1 rounded-xl border border-white/10 bg-white/8 px-3 py-2 text-center backdrop-blur-sm">
-        <span className="text-lg">👕</span>
-        <span className="text-xs leading-tight font-semibold text-white">{slot.player}</span>
-        <span className="text-[11px] leading-tight text-white/60">{slot.name}</span>
+      <div className="flex w-24 flex-col items-center gap-1 text-center">
+        {card && (
+          <Image
+            src={card.image}
+            alt={card.name}
+            width={536}
+            height={776}
+            className="h-auto w-full rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.35)]"
+          />
+        )}
+        <span className="text-[11px] leading-tight font-semibold text-white">{slot.name}</span>
       </div>
     );
   }
 
   return (
-    <div className="flex min-w-[84px] flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-white/20 px-3 py-3 text-center text-white/50">
+    <div className="flex w-24 flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-white/20 px-3 py-8 text-center text-white/50">
       <span className="text-lg">⚪</span>
       <span className="text-[11px] leading-tight">{POSITION_LABEL[position]}</span>
     </div>
@@ -82,15 +94,24 @@ export function SoccerField({ registrations }: { registrations: Registration[] }
             {bench.length === 0 ? (
               <p className="mt-2 text-sm text-white/40">Ninguém no banco por enquanto.</p>
             ) : (
-              <ul className="mt-3 flex flex-wrap gap-2">
-                {bench.map((r) => (
-                  <li
-                    key={r.id}
-                    className="rounded-full border border-white/15 px-3 py-1 text-sm text-white/70"
-                  >
-                    {r.player} — {r.name}
-                  </li>
-                ))}
+              <ul className="mt-3 flex flex-wrap gap-3">
+                {bench.map((r) => {
+                  const card = PLAYER_BY_NAME.get(r.player);
+                  return (
+                    <li key={r.id} className="flex w-20 flex-col items-center gap-1 text-center">
+                      {card && (
+                        <Image
+                          src={card.image}
+                          alt={card.name}
+                          width={536}
+                          height={776}
+                          className="h-auto w-full rounded-lg opacity-90 shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+                        />
+                      )}
+                      <span className="text-[11px] leading-tight text-white/70">{r.name}</span>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </section>

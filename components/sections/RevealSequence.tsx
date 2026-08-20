@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { FunnyAnimal, FunnyPlayer } from "@/lib/types";
 import { PLAYERS } from "@/lib/data/players";
 import { ANIMALS } from "@/lib/data/animals";
-import { POSITION_LABEL } from "@/lib/lineup";
 
-const SPIN_INTERVAL_MS = 90;
-const SPIN_ROUNDS = 14;
-const RESULT_PAUSE_MS = 1800;
+const SPIN_INTERVAL_MS = 110;
+const SPIN_ROUNDS = 12;
+const RESULT_PAUSE_MS = 1600;
+
+const PLAYER_CARD_SIZE = { width: 536, height: 776 };
+const ANIMAL_CARD_SIZE = { width: 552, height: 728 };
 
 type Stage = "intro" | "player-spin" | "player-result" | "animal-spin" | "animal-result" | "done";
 
@@ -23,7 +26,7 @@ export function RevealSequence({
   animal: FunnyAnimal;
 }) {
   const [stage, setStage] = useState<Stage>("intro");
-  const [spinLabel, setSpinLabel] = useState("");
+  const [spinImage, setSpinImage] = useState<string>(player.image);
 
   useEffect(() => {
     if (stage !== "player-spin" && stage !== "animal-spin") return;
@@ -32,7 +35,7 @@ export function RevealSequence({
     let round = 0;
     const interval = setInterval(() => {
       round += 1;
-      setSpinLabel(pool[Math.floor(Math.random() * pool.length)].name);
+      setSpinImage(pool[Math.floor(Math.random() * pool.length)].image);
       if (round >= SPIN_ROUNDS) {
         clearInterval(interval);
         setStage(stage === "player-spin" ? "player-result" : "animal-result");
@@ -58,7 +61,6 @@ export function RevealSequence({
   }, [stage]);
 
   const showPlayerCard = stage !== "intro";
-  const playerRevealed = stage === "player-result" || stage === "animal-spin" || stage === "animal-result" || stage === "done";
   const showAnimalCard = stage === "animal-spin" || stage === "animal-result" || stage === "done";
 
   return (
@@ -76,36 +78,43 @@ export function RevealSequence({
       {stage === "intro" && <p className="animate-pulse text-white/60">Sorteando...</p>}
 
       {showPlayerCard && (
-        <div className="flex w-full flex-col items-center gap-1 rounded-xl border border-orange/30 bg-orange/10 p-6 shadow-[0_4px_24px_rgba(255,107,53,0.15)]">
-          <span className="text-4xl">⚽</span>
-          <p className="text-[11px] tracking-widest text-white/50 uppercase">Seu jogador</p>
-          <p className="font-display text-2xl text-orange">
-            {stage === "player-spin" ? spinLabel : player.name}
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-[11px] tracking-widest text-white/50 uppercase">
+            {stage === "player-spin" ? "Sorteando seu jogador..." : "Seu jogador"}
           </p>
-          {playerRevealed && (
-            <>
-              <p className="text-xs tracking-wide text-white/50 uppercase">
-                {POSITION_LABEL[player.position]}
-              </p>
-              <p className="mt-1 text-sm text-white/70">{player.description}</p>
-            </>
-          )}
+          <div className="mx-auto w-full max-w-[240px]">
+            <Image
+              key={stage === "player-spin" ? spinImage : player.image}
+              src={stage === "player-spin" ? spinImage : player.image}
+              alt={stage === "player-spin" ? "Sorteando jogador" : player.name}
+              width={PLAYER_CARD_SIZE.width}
+              height={PLAYER_CARD_SIZE.height}
+              priority
+              className={`h-auto w-full rounded-2xl ${
+                stage === "player-spin" ? "opacity-70" : "animate-pop shadow-[0_8px_32px_rgba(255,107,53,0.35)]"
+              }`}
+            />
+          </div>
         </div>
       )}
 
       {showAnimalCard && (
-        <div className="animate-float flex w-full flex-col items-center gap-1 rounded-xl border border-cyan/30 bg-cyan/10 p-6 shadow-[0_4px_24px_rgba(0,180,216,0.15)]">
-          <span className="text-4xl">{stage === "animal-spin" ? "🎲" : animal.emoji}</span>
-          <p className="text-[11px] tracking-widest text-white/50 uppercase">Seu animal</p>
-          <p className="font-display text-2xl text-cyan">
-            {stage === "animal-spin" ? spinLabel : animal.name}
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-[11px] tracking-widest text-white/50 uppercase">
+            {stage === "animal-spin" ? "Sorteando seu animal..." : "Seu animal"}
           </p>
-          {stage !== "animal-spin" && (
-            <>
-              <p className="text-xs tracking-wide text-white/50 uppercase">{animal.category}</p>
-              <p className="mt-1 text-sm text-white/70">{animal.description}</p>
-            </>
-          )}
+          <div className="mx-auto w-full max-w-[240px]">
+            <Image
+              key={stage === "animal-spin" ? spinImage : animal.image}
+              src={stage === "animal-spin" ? spinImage : animal.image}
+              alt={stage === "animal-spin" ? "Sorteando animal" : animal.name}
+              width={ANIMAL_CARD_SIZE.width}
+              height={ANIMAL_CARD_SIZE.height}
+              className={`h-auto w-full rounded-2xl ${
+                stage === "animal-spin" ? "opacity-70" : "animate-pop shadow-[0_8px_32px_rgba(0,180,216,0.35)]"
+              }`}
+            />
+          </div>
         </div>
       )}
 

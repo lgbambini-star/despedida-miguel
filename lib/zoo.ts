@@ -73,6 +73,7 @@ export type ZooEnclosure = {
   animal: string;
   emoji: string;
   category: string | null;
+  image: string | null;
   people: Registration[];
 };
 
@@ -97,6 +98,7 @@ export function groupByAnimal(registrations: Registration[]): ZooEnclosure[] {
         animal: display,
         emoji: animalEmoji(trimmed),
         category: known?.category ?? null,
+        image: known?.image ?? null,
         people: [registration],
       });
     }

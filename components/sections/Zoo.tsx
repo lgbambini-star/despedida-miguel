@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Registration } from "@/lib/types";
 import { groupByAnimal } from "@/lib/zoo";
@@ -46,7 +47,17 @@ export function Zoo({ registrations }: { registrations: Registration[] }) {
                   </span>
                 </div>
                 <div className="flex flex-col items-center gap-3 px-4 py-5">
-                  <span className="text-4xl">{enclosure.emoji}</span>
+                  {enclosure.image ? (
+                    <Image
+                      src={enclosure.image}
+                      alt={enclosure.animal}
+                      width={552}
+                      height={728}
+                      className="h-auto w-32 rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+                    />
+                  ) : (
+                    <span className="text-4xl">{enclosure.emoji}</span>
+                  )}
                   <ul className="flex flex-wrap justify-center gap-2">
                     {enclosure.people.map((p) => (
                       <li

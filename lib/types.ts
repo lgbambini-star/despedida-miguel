@@ -4,6 +4,7 @@ export interface FunnyPlayer {
   name: string;
   position: PlayerPosition;
   description: string;
+  image: string;
 }
 
 export type AnimalCategory = "Mamíferos" | "Aves" | "Répteis e Anfíbios" | "Insetos e Outros";
@@ -13,6 +14,7 @@ export interface FunnyAnimal {
   category: AnimalCategory;
   description: string;
   emoji: string;
+  image: string;
 }
 
 export interface Registration {
