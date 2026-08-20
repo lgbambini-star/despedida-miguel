@@ -1,6 +1,9 @@
 import type { Registration } from "@/lib/types";
+import { ANIMALS } from "@/lib/data/animals";
 
-const EMOJI_RULES: [RegExp, string][] = [
+const ANIMAL_BY_NAME = new Map(ANIMALS.map((a) => [a.name.toLowerCase(), a]));
+
+const EMOJI_FALLBACK_RULES: [RegExp, string][] = [
   [/le[aã]o/, "🦁"],
   [/tigre/, "🐯"],
   [/urso/, "🐻"],
@@ -58,7 +61,9 @@ const EMOJI_RULES: [RegExp, string][] = [
 
 export function animalEmoji(animal: string): string {
   const normalized = animal.toLowerCase();
-  for (const [pattern, emoji] of EMOJI_RULES) {
+  const known = ANIMAL_BY_NAME.get(normalized);
+  if (known) return known.emoji;
+  for (const [pattern, emoji] of EMOJI_FALLBACK_RULES) {
     if (pattern.test(normalized)) return emoji;
   }
   return "🐾";
@@ -67,6 +72,7 @@ export function animalEmoji(animal: string): string {
 export type ZooEnclosure = {
   animal: string;
   emoji: string;
+  category: string | null;
   people: Registration[];
 };
 
@@ -80,13 +86,19 @@ export function groupByAnimal(registrations: Registration[]): ZooEnclosure[] {
   for (const registration of sorted) {
     const trimmed = registration.animal.trim();
     const key = trimmed.toLowerCase();
-    const display = trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
+    const known = ANIMAL_BY_NAME.get(key);
+    const display = known ? known.name : trimmed.charAt(0).toUpperCase() + trimmed.slice(1);
 
     const existing = groups.get(key);
     if (existing) {
       existing.people.push(registration);
     } else {
-      groups.set(key, { animal: display, emoji: animalEmoji(trimmed), people: [registration] });
+      groups.set(key, {
+        animal: display,
+        emoji: animalEmoji(trimmed),
+        category: known?.category ?? null,
+        people: [registration],
+      });
     }
   }
 

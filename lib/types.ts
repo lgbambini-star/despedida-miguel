@@ -1,8 +1,18 @@
 export type PlayerPosition = "GOL" | "DEF" | "MEI" | "ATA";
 
-export interface Player2002 {
+export interface FunnyPlayer {
   name: string;
   position: PlayerPosition;
+  description: string;
+}
+
+export type AnimalCategory = "Mamíferos" | "Aves" | "Répteis e Anfíbios" | "Insetos e Outros";
+
+export interface FunnyAnimal {
+  name: string;
+  category: AnimalCategory;
+  description: string;
+  emoji: string;
 }
 
 export interface Registration {

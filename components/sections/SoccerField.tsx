@@ -39,7 +39,7 @@ export function SoccerField({ registrations }: { registrations: Registration[] }
         <h2 className="text-center font-display text-2xl">Escalação da viagem ⚽</h2>
         <p className="mt-1 text-sm text-white/60">
           {startersFilled} de 11 titulares definidos — cada pessoa entra em campo na posição
-          do jogador da Copa de 2002 que ela escolheu.
+          do jogador que saiu no sorteio ao se cadastrar.
         </p>
       </div>
 

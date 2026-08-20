@@ -2,11 +2,14 @@
 
 import { revalidatePath } from "next/cache";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
+import { drawAnimal, drawPlayer } from "@/lib/draw";
+import type { FunnyAnimal, FunnyPlayer } from "@/lib/types";
 
 export type RegistrationFormState = {
   error?: string;
   success?: boolean;
-  takenPlayers?: string[];
+  drawnPlayer?: FunnyPlayer;
+  drawnAnimal?: FunnyAnimal;
 };
 
 async function fetchTakenPlayers(): Promise<string[]> {
@@ -15,6 +18,8 @@ async function fetchTakenPlayers(): Promise<string[]> {
   return (data ?? []).map((row) => row.player as string);
 }
 
+const MAX_DRAW_ATTEMPTS = 5;
+
 export async function createRegistration(
   _prevState: RegistrationFormState,
   formData: FormData,
@@ -22,9 +27,7 @@ export async function createRegistration(
   const name = String(formData.get("name") || "").trim();
   const arrivalAt = String(formData.get("arrivalAt") || "");
   const departureAt = String(formData.get("departureAt") || "");
-  const player = String(formData.get("player") || "");
   const instrument = String(formData.get("instrument") || "").trim();
-  const animal = String(formData.get("animal") || "").trim();
   const destiladoCombo = String(formData.get("destiladoCombo") || "").trim();
   const podeAlugarCarroRaw = String(formData.get("podeAlugarCarro") || "");
   const message = String(formData.get("message") || "").trim();
@@ -33,9 +36,7 @@ export async function createRegistration(
     !name ||
     !arrivalAt ||
     !departureAt ||
-    !player ||
     !instrument ||
-    !animal ||
     !destiladoCombo ||
     (podeAlugarCarroRaw !== "sim" && podeAlugarCarroRaw !== "nao")
   ) {
@@ -56,34 +57,47 @@ export async function createRegistration(
   }
 
   const supabase = createServerSupabaseClient();
-  const { error } = await supabase.from("registrations").insert({
-    name,
-    arrival_at: arrival.toISOString(),
-    departure_at: departure.toISOString(),
-    player,
-    instrument,
-    animal,
-    destilado_combo: destiladoCombo,
-    pode_alugar_carro: podeAlugarCarro,
-    message: message || null,
-  });
 
-  if (error) {
-    if (error.code === "23505") {
-      return {
-        error: `${player} já foi escolhido por outra pessoa. Escolhe outro jogador.`,
-        takenPlayers: await fetchTakenPlayers(),
-      };
+  for (let attempt = 0; attempt < MAX_DRAW_ATTEMPTS; attempt++) {
+    const takenPlayers = await fetchTakenPlayers();
+    const drawnPlayer = drawPlayer(takenPlayers);
+
+    if (!drawnPlayer) {
+      return { error: "Todos os jogadores já foram sorteados! Fala com quem tá organizando." };
     }
+
+    const drawnAnimal = drawAnimal();
+
+    const { error } = await supabase.from("registrations").insert({
+      name,
+      arrival_at: arrival.toISOString(),
+      departure_at: departure.toISOString(),
+      player: drawnPlayer.name,
+      instrument,
+      animal: drawnAnimal.name,
+      destilado_combo: destiladoCombo,
+      pode_alugar_carro: podeAlugarCarro,
+      message: message || null,
+    });
+
+    if (!error) {
+      revalidatePath("/");
+      revalidatePath("/cadastro");
+      revalidatePath("/lista");
+      revalidatePath("/logistica");
+      revalidatePath("/campo");
+      revalidatePath("/palco");
+      revalidatePath("/zoologico");
+      return { success: true, drawnPlayer, drawnAnimal };
+    }
+
+    if (error.code === "23505") {
+      // Outra pessoa sorteou o mesmo jogador ao mesmo tempo — tenta de novo.
+      continue;
+    }
+
     return { error: "Não deu pra salvar, tenta de novo em instantes." };
   }
 
-  revalidatePath("/");
-  revalidatePath("/cadastro");
-  revalidatePath("/lista");
-  revalidatePath("/logistica");
-  revalidatePath("/campo");
-  revalidatePath("/palco");
-  revalidatePath("/zoologico");
-  return { success: true };
+  return { error: "Deu ruim no sorteio, tenta enviar de novo." };
 }

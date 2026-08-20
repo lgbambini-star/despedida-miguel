@@ -1,8 +1,8 @@
 import type { PlayerPosition, Registration } from "@/lib/types";
-import { PLAYERS_2002 } from "@/lib/data/players-2002";
+import { PLAYERS } from "@/lib/data/players";
 
 const POSITION_BY_PLAYER = new Map<string, PlayerPosition>(
-  PLAYERS_2002.map((p) => [p.name, p.position]),
+  PLAYERS.map((p) => [p.name, p.position]),
 );
 
 // Formação 4-4-2: 1 goleiro, 4 zagueiros/laterais, 4 meias, 2 atacantes = 11 titulares.
