@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { CardImage } from "@/components/CardImage";
 import type { Registration } from "@/lib/types";
 import { groupByAnimal } from "@/lib/zoo";
 
@@ -48,7 +48,7 @@ export function Zoo({ registrations }: { registrations: Registration[] }) {
                 </div>
                 <div className="flex flex-col items-center gap-3 px-4 py-5">
                   {enclosure.image ? (
-                    <Image
+                    <CardImage
                       src={enclosure.image}
                       alt={enclosure.animal}
                       width={552}

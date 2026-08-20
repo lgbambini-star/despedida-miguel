@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { CardImage } from "@/components/CardImage";
 import type { FunnyAnimal, FunnyPlayer } from "@/lib/types";
 import { PLAYERS } from "@/lib/data/players";
 import { ANIMALS } from "@/lib/data/animals";
@@ -83,17 +84,27 @@ export function RevealSequence({
             {stage === "player-spin" ? "Sorteando seu jogador..." : "Seu jogador"}
           </p>
           <div className="mx-auto w-full max-w-[240px]">
-            <Image
-              key={stage === "player-spin" ? spinImage : player.image}
-              src={stage === "player-spin" ? spinImage : player.image}
-              alt={stage === "player-spin" ? "Sorteando jogador" : player.name}
-              width={PLAYER_CARD_SIZE.width}
-              height={PLAYER_CARD_SIZE.height}
-              priority
-              className={`h-auto w-full rounded-2xl ${
-                stage === "player-spin" ? "opacity-70" : "animate-pop shadow-[0_8px_32px_rgba(255,107,53,0.35)]"
-              }`}
-            />
+            {stage === "player-spin" ? (
+              <Image
+                key={spinImage}
+                src={spinImage}
+                alt="Sorteando jogador"
+                width={PLAYER_CARD_SIZE.width}
+                height={PLAYER_CARD_SIZE.height}
+                priority
+                className="h-auto w-full rounded-2xl opacity-70"
+              />
+            ) : (
+              <CardImage
+                key={player.image}
+                src={player.image}
+                alt={player.name}
+                width={PLAYER_CARD_SIZE.width}
+                height={PLAYER_CARD_SIZE.height}
+                priority
+                className="h-auto w-full rounded-2xl animate-pop shadow-[0_8px_32px_rgba(255,107,53,0.35)]"
+              />
+            )}
           </div>
         </div>
       )}
@@ -104,16 +115,25 @@ export function RevealSequence({
             {stage === "animal-spin" ? "Sorteando seu animal..." : "Seu animal"}
           </p>
           <div className="mx-auto w-full max-w-[240px]">
-            <Image
-              key={stage === "animal-spin" ? spinImage : animal.image}
-              src={stage === "animal-spin" ? spinImage : animal.image}
-              alt={stage === "animal-spin" ? "Sorteando animal" : animal.name}
-              width={ANIMAL_CARD_SIZE.width}
-              height={ANIMAL_CARD_SIZE.height}
-              className={`h-auto w-full rounded-2xl ${
-                stage === "animal-spin" ? "opacity-70" : "animate-pop shadow-[0_8px_32px_rgba(0,180,216,0.35)]"
-              }`}
-            />
+            {stage === "animal-spin" ? (
+              <Image
+                key={spinImage}
+                src={spinImage}
+                alt="Sorteando animal"
+                width={ANIMAL_CARD_SIZE.width}
+                height={ANIMAL_CARD_SIZE.height}
+                className="h-auto w-full rounded-2xl opacity-70"
+              />
+            ) : (
+              <CardImage
+                key={animal.image}
+                src={animal.image}
+                alt={animal.name}
+                width={ANIMAL_CARD_SIZE.width}
+                height={ANIMAL_CARD_SIZE.height}
+                className="h-auto w-full rounded-2xl animate-pop shadow-[0_8px_32px_rgba(0,180,216,0.35)]"
+              />
+            )}
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { CardImage } from "@/components/CardImage";
 import type { PlayerPosition, Registration } from "@/lib/types";
 import { PLAYERS } from "@/lib/data/players";
 import {
@@ -17,7 +17,7 @@ function PositionSlot({ slot, position }: { slot: LineupSlot; position: PlayerPo
     return (
       <div className="flex w-24 flex-col items-center gap-1 text-center">
         {card && (
-          <Image
+          <CardImage
             src={card.image}
             alt={card.name}
             width={536}
@@ -100,7 +100,7 @@ export function SoccerField({ registrations }: { registrations: Registration[] }
                   return (
                     <li key={r.id} className="flex w-20 flex-col items-center gap-1 text-center">
                       {card && (
-                        <Image
+                        <CardImage
                           src={card.image}
                           alt={card.name}
                           width={536}
