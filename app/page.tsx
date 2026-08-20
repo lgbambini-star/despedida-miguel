@@ -14,7 +14,7 @@ export const revalidate = 0;
 const EXPLORE_LINKS = [
   { href: "#destilados", label: "Preferência de destilado 🍹" },
   { href: "#caronas", label: "Sugestões de carona 🚐" },
-  { href: "#temas", label: "Escalação, banda e zoológico 🎉" },
+  { href: "#temas", label: "Escalação e zoológico 🎉" },
 ];
 
 export default async function Home() {
@@ -52,7 +52,7 @@ export default async function Home() {
             </h1>
             <p className="max-w-md text-white/70">
               14 amigos, voos de todo canto, uma praia só. Confirma sua chegada e entra na
-              escalação, na banda e no zoológico da viagem.
+              escalação e no zoológico da viagem.
             </p>
 
             <div className="mt-2 flex flex-col items-center gap-2 lg:items-start">

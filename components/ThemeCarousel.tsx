@@ -3,12 +3,10 @@
 import { useState } from "react";
 import type { Registration } from "@/lib/types";
 import { SoccerField } from "@/components/sections/SoccerField";
-import { BandStage } from "@/components/sections/BandStage";
 import { Zoo } from "@/components/sections/Zoo";
 
 const SLIDES = [
   { id: "campo", label: "Escalação ⚽" },
-  { id: "palco", label: "A banda 🎸" },
   { id: "zoologico", label: "Zoológico 🦁" },
 ] as const;
 
@@ -60,8 +58,7 @@ export function ThemeCarousel({ registrations }: { registrations: Registration[]
 
       <div>
         {index === 0 && <SoccerField registrations={registrations} />}
-        {index === 1 && <BandStage registrations={registrations} />}
-        {index === 2 && <Zoo registrations={registrations} />}
+        {index === 1 && <Zoo registrations={registrations} />}
       </div>
     </div>
   );

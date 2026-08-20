@@ -55,19 +55,6 @@ export function RegistrationForm() {
         />
       </div>
 
-      <div className="flex flex-col gap-1">
-        <label htmlFor="instrument" className="text-sm font-medium text-white/80">
-          Instrumento que tocaria numa banda
-        </label>
-        <input
-          id="instrument"
-          name="instrument"
-          type="text"
-          required
-          className="rounded-md border border-white/15 bg-white/5 px-3 py-2 text-white placeholder:text-white/30 focus:border-mint/60 focus:ring-1 focus:ring-mint/30 focus:outline-none"
-        />
-      </div>
-
       <p className="text-sm text-white/60">
         🎲 Ao confirmar, você vai <strong>ganhar no sorteio</strong> um jogador pra escalação e um
         bicho pro zoológico.

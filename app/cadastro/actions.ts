@@ -27,7 +27,6 @@ export async function createRegistration(
   const name = String(formData.get("name") || "").trim();
   const arrivalAt = String(formData.get("arrivalAt") || "");
   const departureAt = String(formData.get("departureAt") || "");
-  const instrument = String(formData.get("instrument") || "").trim();
   const destiladoCombo = String(formData.get("destiladoCombo") || "").trim();
   const podeAlugarCarroRaw = String(formData.get("podeAlugarCarro") || "");
   const message = String(formData.get("message") || "").trim();
@@ -36,7 +35,6 @@ export async function createRegistration(
     !name ||
     !arrivalAt ||
     !departureAt ||
-    !instrument ||
     !destiladoCombo ||
     (podeAlugarCarroRaw !== "sim" && podeAlugarCarroRaw !== "nao")
   ) {
@@ -73,7 +71,6 @@ export async function createRegistration(
       arrival_at: arrival.toISOString(),
       departure_at: departure.toISOString(),
       player: drawnPlayer.name,
-      instrument,
       animal: drawnAnimal.name,
       destilado_combo: destiladoCombo,
       pode_alugar_carro: podeAlugarCarro,
@@ -86,7 +83,6 @@ export async function createRegistration(
       revalidatePath("/lista");
       revalidatePath("/logistica");
       revalidatePath("/campo");
-      revalidatePath("/palco");
       revalidatePath("/zoologico");
       return { success: true, drawnPlayer, drawnAnimal };
     }

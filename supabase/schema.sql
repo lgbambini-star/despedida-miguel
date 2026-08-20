@@ -36,3 +36,8 @@ alter table registrations
   add column if not exists destilado_combo text,
   add column if not exists pode_alugar_carro boolean,
   add column if not exists message text;
+
+-- MIGRAÇÃO: a banda saiu do projeto (sem pergunta de instrumento nem tela de palco).
+-- Rode isso no SQL Editor do Supabase pra remover a coluna do banco.
+alter table registrations
+  drop column if exists instrument;

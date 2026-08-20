@@ -22,7 +22,6 @@ export interface Registration {
   arrival_at: string;
   departure_at: string;
   player: string;
-  instrument: string;
   animal: string;
   destilado_combo: string | null;
   pode_alugar_carro: boolean | null;
