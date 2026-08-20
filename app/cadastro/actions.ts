@@ -1,15 +1,12 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { drawAnimal, drawPlayer } from "@/lib/draw";
-import type { FunnyAnimal, FunnyPlayer } from "@/lib/types";
 
 export type RegistrationFormState = {
   error?: string;
-  success?: boolean;
-  drawnPlayer?: FunnyPlayer;
-  drawnAnimal?: FunnyAnimal;
 };
 
 async function fetchTakenPlayers(): Promise<string[]> {
@@ -55,6 +52,7 @@ export async function createRegistration(
   }
 
   const supabase = createServerSupabaseClient();
+  let revelacaoId: string | null = null;
 
   for (let attempt = 0; attempt < MAX_DRAW_ATTEMPTS; attempt++) {
     const takenPlayers = await fetchTakenPlayers();
@@ -66,25 +64,24 @@ export async function createRegistration(
 
     const drawnAnimal = drawAnimal();
 
-    const { error } = await supabase.from("registrations").insert({
-      name,
-      arrival_at: arrival.toISOString(),
-      departure_at: departure.toISOString(),
-      player: drawnPlayer.name,
-      animal: drawnAnimal.name,
-      destilado_combo: destiladoCombo,
-      pode_alugar_carro: podeAlugarCarro,
-      message: message || null,
-    });
+    const { data, error } = await supabase
+      .from("registrations")
+      .insert({
+        name,
+        arrival_at: arrival.toISOString(),
+        departure_at: departure.toISOString(),
+        player: drawnPlayer.name,
+        animal: drawnAnimal.name,
+        destilado_combo: destiladoCombo,
+        pode_alugar_carro: podeAlugarCarro,
+        message: message || null,
+      })
+      .select("id")
+      .single();
 
     if (!error) {
-      revalidatePath("/");
-      revalidatePath("/cadastro");
-      revalidatePath("/lista");
-      revalidatePath("/logistica");
-      revalidatePath("/campo");
-      revalidatePath("/zoologico");
-      return { success: true, drawnPlayer, drawnAnimal };
+      revelacaoId = data.id as string;
+      break;
     }
 
     if (error.code === "23505") {
@@ -95,5 +92,15 @@ export async function createRegistration(
     return { error: "Não deu pra salvar, tenta de novo em instantes." };
   }
 
-  return { error: "Deu ruim no sorteio, tenta enviar de novo." };
+  if (!revelacaoId) {
+    return { error: "Deu ruim no sorteio, tenta enviar de novo." };
+  }
+
+  revalidatePath("/");
+  revalidatePath("/cadastro");
+  revalidatePath("/lista");
+  revalidatePath("/logistica");
+  revalidatePath("/campo");
+  revalidatePath("/zoologico");
+  redirect(`/revelacao/${revelacaoId}`);
 }

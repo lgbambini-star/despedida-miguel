@@ -3,16 +3,11 @@
 import { useActionState } from "react";
 import { createRegistration, type RegistrationFormState } from "@/app/cadastro/actions";
 import { DESTILADOS } from "@/lib/data/destilados";
-import { DrawReveal } from "@/components/sections/DrawReveal";
 
 const initialState: RegistrationFormState = {};
 
 export function RegistrationForm() {
   const [state, formAction, isPending] = useActionState(createRegistration, initialState);
-
-  if (state.success && state.drawnPlayer && state.drawnAnimal) {
-    return <DrawReveal player={state.drawnPlayer} animal={state.drawnAnimal} />;
-  }
 
   return (
     <form action={formAction} className="flex flex-col gap-5">
@@ -56,8 +51,8 @@ export function RegistrationForm() {
       </div>
 
       <p className="text-sm text-white/60">
-        🎲 Ao confirmar, você vai <strong>ganhar no sorteio</strong> um jogador pra escalação e um
-        bicho pro zoológico.
+        🎲 Ao confirmar, abre a tela de revelação com o jogador e o animal que você{" "}
+        <strong>ganhou no sorteio</strong>.
       </p>
 
       <div className="flex flex-col gap-1">
