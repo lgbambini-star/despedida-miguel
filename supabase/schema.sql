@@ -41,3 +41,8 @@ alter table registrations
 -- Rode isso no SQL Editor do Supabase pra remover a coluna do banco.
 alter table registrations
   drop column if exists instrument;
+
+-- MIGRAÇÃO: o animal do sorteio não pode mais repetir entre cadastros.
+-- Rode isso no SQL Editor do Supabase pra impedir duplicidade (evita corrida entre cadastros simultâneos).
+alter table registrations
+  add constraint registrations_animal_key unique (animal);

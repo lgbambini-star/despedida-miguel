@@ -1,6 +1,6 @@
 import type { FunnyAnimal } from "@/lib/types";
 
-// Lista fechada para o sorteio automático de animal no cadastro. Animal pode repetir.
+// Lista fechada para o sorteio automático de animal no cadastro. Cada animal só pode ser sorteado uma vez.
 export const ANIMALS: FunnyAnimal[] = [
   // Mamíferos
   {

@@ -14,7 +14,10 @@ export function drawPlayer(takenPlayerNames: string[]): FunnyPlayer | null {
   return pickRandom(available);
 }
 
-/** Sorteia um animal entre todos, sem restrição de unicidade (pode repetir). */
-export function drawAnimal(): FunnyAnimal {
-  return pickRandom(ANIMALS);
+/** Sorteia um animal entre os ainda não atribuídos a ninguém. Retorna null se todos já saíram. */
+export function drawAnimal(takenAnimalNames: string[]): FunnyAnimal | null {
+  const taken = new Set(takenAnimalNames);
+  const available = ANIMALS.filter((a) => !taken.has(a.name));
+  if (available.length === 0) return null;
+  return pickRandom(available);
 }

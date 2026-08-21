@@ -15,6 +15,12 @@ async function fetchTakenPlayers(): Promise<string[]> {
   return (data ?? []).map((row) => row.player as string);
 }
 
+async function fetchTakenAnimals(): Promise<string[]> {
+  const supabase = createServerSupabaseClient();
+  const { data } = await supabase.from("registrations").select("animal");
+  return (data ?? []).map((row) => row.animal as string);
+}
+
 const MAX_DRAW_ATTEMPTS = 5;
 
 export async function createRegistration(
@@ -55,14 +61,18 @@ export async function createRegistration(
   let revelacaoId: string | null = null;
 
   for (let attempt = 0; attempt < MAX_DRAW_ATTEMPTS; attempt++) {
-    const takenPlayers = await fetchTakenPlayers();
+    const [takenPlayers, takenAnimals] = await Promise.all([fetchTakenPlayers(), fetchTakenAnimals()]);
     const drawnPlayer = drawPlayer(takenPlayers);
 
     if (!drawnPlayer) {
       return { error: "Todos os jogadores já foram sorteados! Fala com quem tá organizando." };
     }
 
-    const drawnAnimal = drawAnimal();
+    const drawnAnimal = drawAnimal(takenAnimals);
+
+    if (!drawnAnimal) {
+      return { error: "Todos os animais já foram sorteados! Fala com quem tá organizando." };
+    }
 
     const { data, error } = await supabase
       .from("registrations")
@@ -85,7 +95,7 @@ export async function createRegistration(
     }
 
     if (error.code === "23505") {
-      // Outra pessoa sorteou o mesmo jogador ao mesmo tempo — tenta de novo.
+      // Outra pessoa sorteou o mesmo jogador ou animal ao mesmo tempo — tenta de novo.
       continue;
     }
 
