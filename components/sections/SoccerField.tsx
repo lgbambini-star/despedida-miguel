@@ -20,6 +20,7 @@ function PositionSlot({ slot, position }: { slot: LineupSlot; position: PlayerPo
           <CardImage
             src={card.image}
             alt={card.name}
+            personName={slot.name}
             width={536}
             height={776}
             className="h-auto w-full rounded-lg shadow-[0_4px_16px_rgba(0,0,0,0.35)]"
@@ -103,6 +104,7 @@ export function SoccerField({ registrations }: { registrations: Registration[] }
                         <CardImage
                           src={card.image}
                           alt={card.name}
+                          personName={r.name}
                           width={536}
                           height={776}
                           className="h-auto w-full rounded-lg opacity-90 shadow-[0_4px_16px_rgba(0,0,0,0.3)]"

@@ -51,6 +51,7 @@ export function Zoo({ registrations }: { registrations: Registration[] }) {
                     <CardImage
                       src={enclosure.image}
                       alt={enclosure.animal}
+                      personName={enclosure.people.map((p) => p.name).join(", ")}
                       width={552}
                       height={728}
                       className="h-auto w-32 rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.3)]"

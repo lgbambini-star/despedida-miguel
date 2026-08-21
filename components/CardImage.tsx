@@ -11,6 +11,7 @@ export function CardImage({
   height,
   className,
   priority,
+  personName,
 }: {
   src: string;
   alt: string;
@@ -18,6 +19,7 @@ export function CardImage({
   height: number;
   className?: string;
   priority?: boolean;
+  personName?: string;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -57,13 +59,21 @@ export function CardImage({
             >
               ✕
             </button>
-            <Image
-              src={src}
-              alt={alt}
-              width={width}
-              height={height}
-              className="h-auto max-h-[85vh] w-auto max-w-[90vw] cursor-zoom-out rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
-            />
+            <div className="flex flex-col items-center gap-3" onClick={(e) => e.stopPropagation()}>
+              <Image
+                src={src}
+                alt={alt}
+                width={width}
+                height={height}
+                onClick={() => setOpen(false)}
+                className="h-auto max-h-[85vh] w-auto max-w-[90vw] cursor-zoom-out rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+              />
+              {personName && (
+                <p className="font-display text-xl text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                  {personName}
+                </p>
+              )}
+            </div>
           </div>,
           document.body,
         )}

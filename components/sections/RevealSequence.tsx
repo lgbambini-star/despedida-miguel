@@ -99,6 +99,7 @@ export function RevealSequence({
                 key={player.image}
                 src={player.image}
                 alt={player.name}
+                personName={name}
                 width={PLAYER_CARD_SIZE.width}
                 height={PLAYER_CARD_SIZE.height}
                 priority
@@ -129,6 +130,7 @@ export function RevealSequence({
                 key={animal.image}
                 src={animal.image}
                 alt={animal.name}
+                personName={name}
                 width={ANIMAL_CARD_SIZE.width}
                 height={ANIMAL_CARD_SIZE.height}
                 className="h-auto w-full rounded-2xl animate-pop shadow-[0_8px_32px_rgba(0,180,216,0.35)]"
